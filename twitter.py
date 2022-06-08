@@ -1,10 +1,13 @@
-import os
 import json
+import os
 
+from dotenv import load_dotenv
 from requests_oauthlib import OAuth1Session
 
 
 def connect() -> OAuth1Session:
+    load_dotenv(".env")
+
     CONSUMER_KEY = os.getenv("CONSUMER_KEY")
     CONSUMER_SECRET = os.getenv("CONSUMER_SECRET")
     ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
@@ -20,7 +23,7 @@ def tweet(twitter_session: OAuth1Session, text: str) -> str:
         "https://api.twitter.com/1.1/statuses/update.json", params=params)
 
     if res.status_code != 200:
-        return ""
+        return "An error occurred"
 
     tweet = json.loads(res.text)
     return tweet["id_str"]
@@ -32,8 +35,7 @@ def search(twitter_session: OAuth1Session, query: str, since_id: str) -> list:
         "locale": "ja",
         "result_type": "recent",
         "count": 100,
-        "since_id": since_id,
-        "include_entities": "false"
+        "since_id": since_id
     }
     res = twitter_session.get(
         "https://api.twitter.com/1.1/search/tweets.json", params=params)
@@ -66,7 +68,7 @@ def retweet(twitter_session: OAuth1Session, id: str) -> str:
         f"https://api.twitter.com/1.1/statuses/retweet/{id}.json", params=params)
 
     if res.status_code != 200:
-        return ""
+        return "An error occurred"
 
     tweet = json.loads(res.text)
     return tweet["id_str"]

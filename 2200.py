@@ -1,11 +1,12 @@
 import random
+from datetime import datetime
 
 import mycsv
 import twitter
 
 session = twitter.connect()
 
-status_id_1200 = mycsv.get_last_row("1200.csv")[0]
+status_id_1200 = mycsv.get_last_row("1200.csv")[1]
 mentions = twitter.get_mentions(session, status_id_1200)
 
 themes = []
@@ -27,5 +28,5 @@ text = "本日のワンドロのお題は、\n"\
 
 id = twitter.tweet(session, text)
 
-mycsv.append_row("2200.csv",  [themes_chosen[0],
+mycsv.append_row("2200.csv",  [datetime.now(), themes_chosen[0],
                  themes_chosen[1], themes_chosen[2], id])

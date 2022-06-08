@@ -1,16 +1,22 @@
 import csv
 import os
 
+from dotenv import load_dotenv
+
+
+def get_filepath(filename: str) -> str:
+    load_dotenv(".env")
+    folder_path = os.getenv("FOLDER_PATH")
+    return os.path.join(folder_path, filename)
+
 
 def get_last_row(filename: str) -> list:
-    folder_path = os.getenv("FOLDER_PATH")
-    with open(f"{folder_path}//{filename}") as f:
+    with open(get_filepath(filename)) as f:
         reader = csv.reader(f)
         return [row for row in reader][-1]
 
 
 def append_row(filename: str, new_row: list):
-    folder_path = os.getenv("FOLDER_PATH")
-    with open(f"{folder_path}//{filename}", "a") as f:
+    with open(get_filepath(filename), "a") as f:
         writer = csv.writer(f)
         writer.writerow(new_row)

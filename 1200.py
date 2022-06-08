@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import mycsv
 import twitter
 
@@ -10,4 +12,4 @@ text = "本日23:00からtraP1drawを実施します！\n"\
 session = twitter.connect()
 id = twitter.tweet(session, text)
 
-mycsv.append_row("1200.csv", [id])
+mycsv.append_row("1200.csv", [datetime.now(), id])
