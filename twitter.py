@@ -6,7 +6,8 @@ from requests_oauthlib import OAuth1Session
 
 
 def connect() -> OAuth1Session:
-    load_dotenv(".env")
+    folder_path = os.path.abspath("")
+    load_dotenv(os.path.join(folder_path, ".env"))
 
     CONSUMER_KEY = os.getenv("CONSUMER_KEY")
     CONSUMER_SECRET = os.getenv("CONSUMER_SECRET")

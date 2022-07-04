@@ -1,12 +1,9 @@
 import csv
 import os
 
-from dotenv import load_dotenv
-
 
 def get_filepath(filename: str) -> str:
-    load_dotenv(".env")
-    folder_path = os.getenv("FOLDER_PATH")
+    folder_path = os.path.abspath("")
     return os.path.join(folder_path, filename)
 
 
